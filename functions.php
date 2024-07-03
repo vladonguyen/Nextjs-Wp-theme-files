@@ -9,6 +9,42 @@
  * @since Twenty Twenty-Two 1.0
  */
 
+ function onetarek_prevent_future_type($post_data) {
+    if ($post_data['post_status'] == 'future') {
+        $post_data['post_status'] = 'publish';
+    }
+    return $post_data;
+}
+
+add_filter('wp_insert_post_data', 'onetarek_prevent_future_type');
+remove_action('future_post', '_future_post_hook');
+
+
+
+// Add width and height to GraphQL schema for image
+add_action('graphql_register_types', function() {
+    // Register the width field
+    register_graphql_field('MediaItem', 'width', [
+        'type' => 'Int',
+        'description' => __('The width of the image', 'your-textdomain'),
+        'resolve' => function($source, $args, $context, $info) {
+            $image_metadata = wp_get_attachment_metadata($source->databaseId);
+            return isset($image_metadata['width']) ? $image_metadata['width'] : null;
+        }
+    ]);
+
+    // Register the height field
+    register_graphql_field('MediaItem', 'height', [
+        'type' => 'Int',
+        'description' => __('The height of the image', 'your-textdomain'),
+        'resolve' => function($source, $args, $context, $info) {
+            $image_metadata = wp_get_attachment_metadata($source->databaseId);
+            return isset($image_metadata['height']) ? $image_metadata['height'] : null;
+        }
+    ]);
+});
+
+
  add_action('acf/init', 'acf_init_block_types');
  function acf_init_block_types(){
 	add_filter('wp_graphql_blocks_process_attributes', function($attributes, $data, $post_id){
@@ -18,6 +54,7 @@
 			$attributes['bathrooms'] = get_field('bathrooms', $post_id) ?? "";
 			$attributes['has_parking'] = get_field('has_parking', $post_id) ?? "";
 			$attributes['pet_friendly'] = get_field('pet_friendly', $post_id) ?? "";
+			
 		}
 
 		return $attributes;
@@ -30,6 +67,7 @@
 		register_block_type(get_template_directory() . "/template-parts/blocks/formspreeForm/block.json");
 		register_block_type(get_template_directory() . "/template-parts/blocks/propertyFeatures/block.json");
 		register_block_type(get_template_directory() . "/template-parts/blocks/tickItem/block.json");
+		register_block_type(get_template_directory() . "/template-parts/blocks/introText/block.json");
 	}
 	
 	// OLD WAY OF REGISTERING CUSTOM ACF GUTENBERG BLOCKS
@@ -97,6 +135,28 @@
 		'show_in_graphql' => true,
 		'icon_url' => 'dashicons-menu'
 	));
+		acf_add_options_page(array(
+			'page_title' => 'Footer menu 1',
+			'menu_title' => 'Footer menu 1',
+			'show_in_graphql' => true,
+			'icon_url' => 'dashicons-menu'
+		));
+
+		acf_add_options_page(array(
+			'page_title' => 'Footer menu 2',
+			'menu_title' => 'Footer menu 2',
+			'show_in_graphql' => true,
+			'icon_url' => 'dashicons-menu'
+		));
+
+		acf_add_options_page(array(
+			'page_title' => 'Footer menu 3',
+			'menu_title' => 'Footer menu 3',
+			'show_in_graphql' => true,
+			'icon_url' => 'dashicons-menu'
+		));
+
+		
  }
 
 
