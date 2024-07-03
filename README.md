@@ -10,4 +10,4 @@ These files extend the functionality of the Twenty Twenty-Two WordPress theme to
 
 ## Note
 
-This code is based on the course [Next JS & WordPress: Build rapid NextJS sites with Next & WP](https://www.udemy.com/course/next-js-wordpress/). However, it might be inspiring to somebody working on WordPress child themes used as headless CMS with Next.js. In case you need to go more in depth, I recommend you to watch the course.
+This code is based on the course [Next JS & WordPress: Build rapid NextJS sites with Next & WP](https://www.udemy.com/course/next-js-wordpress/). However, it might be inspiring to somebody working on WordPress child themes used as headless CMS with Next.js. In case you need to go more in depth, I recommend you to watch the course and addapt the code according to your needs. Please reach to me in case you need more info.
